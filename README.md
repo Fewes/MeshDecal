@@ -1,0 +1,1 @@
+Same as the main branch, but with an additional feature that lets you copy properties form the source mesh renderer to the decal renderer (check UpdateMateriaProperties in MeshDecal.cs for more info).
