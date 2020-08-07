@@ -239,6 +239,17 @@ public class MeshDecal : MonoBehaviour
 
 	readonly List<int> tempTriangles	= new List<int>();
 
+	MaterialPropertyBlock _materialProperties;
+	MaterialPropertyBlock materialProperties
+	{
+		get
+		{
+			if (_materialProperties == null)
+				_materialProperties = new MaterialPropertyBlock();
+			return _materialProperties;
+		}
+	}
+
 #if UNITY_EDITOR
 	[SerializeField, HideInInspector]
 	Vector3 m_PrevLocalPos;
@@ -254,6 +265,7 @@ public class MeshDecal : MonoBehaviour
 		if (!Application.isPlaying)
 			UnityEditor.EditorApplication.update +=	EditorUpdate;
 #endif
+		UpdateMaterialProperties();
 
 		if (serialized)
 		{
@@ -292,6 +304,19 @@ public class MeshDecal : MonoBehaviour
 	void OnValidate ()
 	{
 		Recalculate();
+	}
+
+	void UpdateMaterialProperties ()
+	{
+		var sourceRenderer = sourceTransform.GetComponent<Renderer>();
+		if (sourceRenderer)
+		{
+			meshRenderer.GetPropertyBlock(materialProperties);
+			var normalMap = sourceRenderer.sharedMaterial.GetTexture("_BumpMap");
+			if (normalMap)
+				materialProperties.SetTexture("_BumpMap", normalMap);
+			meshRenderer.SetPropertyBlock(materialProperties);
+		}
 	}
 
 	bool IsInsideUnitCube (Vector3 p)
@@ -483,6 +508,7 @@ public class MeshDecal : MonoBehaviour
 		meshFilter.hideFlags = hideComponents ? HideFlags.HideInInspector : HideFlags.None;
 		meshRenderer.hideFlags = hideComponents ? HideFlags.HideInInspector : HideFlags.None;
 		meshRenderer.sharedMaterial = m_Material;
+		UpdateMaterialProperties();
 
 		if (!serialized)
 		{
