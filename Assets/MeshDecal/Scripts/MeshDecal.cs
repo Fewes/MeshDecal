@@ -312,6 +312,7 @@ public class MeshDecal : MonoBehaviour
 		if (sourceRenderer)
 		{
 			meshRenderer.GetPropertyBlock(materialProperties);
+			// Find the normal map of the original mesh renderer and if found, set it as a material property
 			var normalMap = sourceRenderer.sharedMaterial.GetTexture("_BumpMap");
 			if (normalMap)
 				materialProperties.SetTexture("_BumpMap", normalMap);
