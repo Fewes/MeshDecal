@@ -1,3 +1,5 @@
+![Showing the mesh projection](Image.jpg)
+
 # MeshDecal
 A simple mesh decal component for Unity. The project uses URP but the component works in any version of Unity.
 To install in another project, just copy the Assets/MeshDecal/ directory to your own assets folder.
