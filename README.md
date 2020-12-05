@@ -2,6 +2,7 @@
 
 # MeshDecal
 A simple mesh decal component for Unity. The project uses URP but the component works in any version of Unity.
+Because the resulting decal is just a mesh, it will work with any material in any render pipeline.
 To install in another project, just copy the Assets/MeshDecal/ directory to your own assets folder.
 
 # Info
